@@ -25,4 +25,4 @@ jobs:
     - name : test
       run: java -version
     - name: Build with Maven
-      run: mvn --f ./warzone/pom.xml install -Dmaven.test.skip=true
+      run: mvn -B package --file ./warzone/pom.xml
