@@ -23,5 +23,5 @@ jobs:
     - name: Build with Maven
       run: mvn --version
     - name : test
-      run: java --version
+      run: java -version
    
