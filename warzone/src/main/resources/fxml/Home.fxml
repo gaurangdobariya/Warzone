@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="AnchorMain" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="440.0" prefWidth="660.0" style="-fx-background-color: #CDCD14;"  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.soen6441.warzone.controller.WelcomeController">
+<AnchorPane fx:id="AnchorMain" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="440.0" prefWidth="660.0" style="-fx-background-color: #CDCD14;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.soen6441.warzone.controller.WelcomeController">
    <children>
       <Button fx:id="BtnCreateMap" layoutX="35.0" layoutY="128.0" mnemonicParsing="false" onAction="#createMap" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: grey;" text="Create Map" />
       <Button fx:id="BtnPlayGame" layoutX="174.0" layoutY="128.0" mnemonicParsing="false" prefHeight="26.0" onAction="#playGame" prefWidth="110.0" style="-fx-background-color: grey;" text="Play Game" />
