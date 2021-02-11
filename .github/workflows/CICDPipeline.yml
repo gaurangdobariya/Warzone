@@ -25,7 +25,7 @@ jobs:
     - name : test
       run: java -version
     - name : installdata
-      run: sudo apt-get install openjfx
+      run: apt-get install openjfx
     - name: Build with Maven
       run: mvn --f ./warzone/pom.xml install -Dmaven.test.skip=true
    
