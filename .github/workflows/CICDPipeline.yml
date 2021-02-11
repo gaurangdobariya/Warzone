@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubantu-16.04
+    runs-on: ubantu-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -24,6 +24,3 @@ jobs:
       run: mvn --version
     - name : test
       run: java -version
-    - name : installdata
-      run: mvn --f ./warzone/pom.xml install -Dmaven.test.skip=true
-   
