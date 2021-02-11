@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * This is the implementation class of MapHandlingInterface having business
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author <a href="mailto:y_vaghan@encs.concordia.ca">Yashkumar Vaghani</a>
  *
  */
+@Service
 public class MapHandlingImpl implements MapHandlingInterface {
 
     @Autowired

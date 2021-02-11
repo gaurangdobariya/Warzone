@@ -23,10 +23,13 @@ public class WelcomeController implements Initializable {
     @FXML
     private Button d_BtnExit;
 
+    @FXML
+    private Button d_BtnPlayGame;
+
 
     @Lazy
     @Autowired
-    private StageManager stageManager;
+    private StageManager d_stagemanager;
 
     /**
      * This method takes a user to map creation, where player can create mad and edit it
@@ -35,7 +38,7 @@ public class WelcomeController implements Initializable {
     @FXML
     void createMap(ActionEvent event) {
 
-        stageManager.switchScene(FxmlView.MAPMANAGER,null);
+        d_stagemanager.switchScene(FxmlView.MAPMANAGER,null);
     }
 
     /**
@@ -45,7 +48,7 @@ public class WelcomeController implements Initializable {
     @FXML
     void playGame(ActionEvent event) {
 
-        stageManager.switchScene(FxmlView.GAMECONFIG,null);
+        d_stagemanager.switchScene(FxmlView.GAMECONFIG,null);
     }
 
 
@@ -72,8 +75,6 @@ public class WelcomeController implements Initializable {
      * java.util.ResourceBundle)
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
+    public void initialize(URL location, ResourceBundle resources) {};
 
 }
