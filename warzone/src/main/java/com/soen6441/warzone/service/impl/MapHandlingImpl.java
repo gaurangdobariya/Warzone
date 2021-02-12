@@ -2,8 +2,10 @@ package com.soen6441.warzone.service.impl;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+
 import com.soen6441.warzone.service.MapHandlingInterface;
 import com.soen6441.warzone.model.*;
+
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
@@ -21,6 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,14 +32,13 @@ import org.springframework.stereotype.Service;
  * logic of map handling which includes create, edit and validate map etc.
  *
  * @author <a href="mailto:y_vaghan@encs.concordia.ca">Yashkumar Vaghani</a>
- *
  */
 @Service
 public class MapHandlingImpl implements MapHandlingInterface {
 
     @Autowired
     private WarMap d_warMap;
-    
+
     @Autowired
     private CommandResponse commandResponse;
 
@@ -66,13 +68,13 @@ public class MapHandlingImpl implements MapHandlingInterface {
         try {
             if (!isNullOrEmpty(p_command)) {
                 if (p_command.startsWith("editcontinent")) {
-                   return checkCommandEditContinent(p_command);
+                    return checkCommandEditContinent(p_command);
                 } else if (p_command.startsWith("editcountry")) {
                     checkCommandEditCountry(p_command);
                 } else if (p_command.startsWith("editneighbor") || p_command.startsWith("editneighbour")) {
                     checkCommandEditNeighbours(p_command);
                 } else if (p_command.startsWith("showmap")) {
-                            showmap();
+                    showmap();
                 } else if (p_command.startsWith("savemap")) {
                     // save map
                 } else if (p_command.startsWith("editmap")) {
@@ -95,7 +97,7 @@ public class MapHandlingImpl implements MapHandlingInterface {
             l_isValid = false;
         }
 //        return l_isValid;
-return commandResponse;
+        return commandResponse;
     }
 
     /**
@@ -156,7 +158,7 @@ return commandResponse;
 
 //        return l_result.toString();
 //        return "Continent changes successfully executed.";
-          return commandResponse; 
+        return commandResponse;
     }
 
     /**
@@ -209,9 +211,8 @@ return commandResponse;
      * This method will return true and break if neighbor got removed and this
      * method is used for removal of country's neighbor
      *
-     * @param p_countryIndex id of the country you want to delete for
+     * @param p_countryIndex  id of the country you want to delete for
      * @param p_neighborIndex id of the neighbor you want to delete
-     *
      * @return false if not possible to delete or does not exist
      */
     public boolean deleteNeighbour(int p_countryIndex, int p_neighborIndex) {
@@ -238,7 +239,7 @@ return commandResponse;
      * This method will save continent for both terminal and GUI
      *
      * @param p_continentName name of continent
-     * @param p_value value of Continent
+     * @param p_value         value of Continent
      */
     public void saveContinent(String p_continentName, String p_value) {
 
@@ -340,7 +341,7 @@ return commandResponse;
     /**
      * This method will save country given from both GUI and command line
      *
-     * @param p_countryName name of the country
+     * @param p_countryName    name of the country
      * @param p_continentIndex index of continent
      */
     public void saveCountry(String p_countryName, int p_continentIndex) {
@@ -355,6 +356,7 @@ return commandResponse;
 
     /**
      * This method is used to validate the neighbour command and calls add or remove as per the user command
+     *
      * @param p_neighbour
      * @return
      */
@@ -362,7 +364,7 @@ return commandResponse;
 
         String l_countryName = "";
         String l_neighbourCountryName = "";
-        boolean l_result=false;
+        boolean l_result = false;
         List<String> l_commandString = Arrays.asList(p_neighbour.split(" "));
         if (l_commandString.size() == 1 || (l_commandString.size() % 3) != 1) {
             commandResponse.setD_isValid(false);
@@ -370,32 +372,27 @@ return commandResponse;
             return commandResponse;
         }
 
-        for (int l_i = 0; l_i < (l_commandString.size()-2); l_i++) {
+        for (int l_i = 0; l_i < (l_commandString.size() - 2); l_i++) {
             l_countryName = l_commandString.get(l_i + 1);
             l_neighbourCountryName = l_commandString.get(l_i + 2);
             if (validateIOString(l_countryName, "^([a-zA-Z]-+\\s)*[a-zA-Z-]+$") && validateIOString(l_neighbourCountryName, "^([a-zA-Z]-+\\s)*[a-zA-Z-]+$")) {
                 if (l_commandString.get(l_i).equalsIgnoreCase("-add")) {
                     if (d_warMap.getD_continents() != null) {
-                        int l_countryId=getCountryIndexByCountryName(d_warMap.getD_continents(), l_countryName);
-                        int l_neighbourCountryId=getCountryIndexByCountryName(d_warMap.getD_continents(), l_neighbourCountryName);
-                        l_result=saveNeighbour(l_countryId, l_neighbourCountryId);
+                        int l_countryId = getCountryIndexByCountryName(d_warMap.getD_continents(), l_countryName);
+                        int l_neighbourCountryId = getCountryIndexByCountryName(d_warMap.getD_continents(), l_neighbourCountryName);
+                        l_result = saveNeighbour(l_countryId, l_neighbourCountryId);
                     }
-                    if(l_result) {
+                    if (l_result) {
                         commandResponse.setD_isValid(true);
                         commandResponse.setD_responseString("Neighbour is added successfully");
                         return commandResponse;
-                    }
-                    else {
+                    } else {
                         commandResponse.setD_isValid(false);
                         commandResponse.setD_responseString("neighbour is not added successfully");
                     }
+                } else if (l_commandString.get(l_i).equalsIgnoreCase("-remove")) {
                 }
-                else if (l_commandString.get(l_i).equalsIgnoreCase("-remove"))
-                {
-                }
-            }
-            else
-            {
+            } else {
                 commandResponse.setD_isValid(false);
                 commandResponse.setD_responseString("Invalid Command!!");
                 return commandResponse;
@@ -408,14 +405,14 @@ return commandResponse;
 
     /**
      * This method is used to add the neighbour
+     *
      * @param p_countryId
      * @param p_neighbour
      * @return
      */
     public boolean saveNeighbour(int p_countryId, int p_neighbour) {
 
-        if(p_countryId==p_neighbour)
-        {
+        if (p_countryId == p_neighbour) {
             return false;
         }
 
@@ -425,17 +422,15 @@ return commandResponse;
                 for (Country l_country : l_entry.getValue().getD_countryList()) {
                     if (p_countryId == l_country.getD_countryIndex()) {
 
-                        String l_neighbourNameToAdd = getCountryNamebyCountryId(d_warMap.getD_continents(),p_neighbour);
-                        System.out.println("how "+l_neighbourNameToAdd);
-                        if(l_country.getD_neighbourCountries() == null )
-                        {
-                            List<String> addToNeighbourList=new ArrayList<String>();
+                        String l_neighbourNameToAdd = getCountryNamebyCountryId(d_warMap.getD_continents(), p_neighbour);
+                        System.out.println("how " + l_neighbourNameToAdd);
+                        if (l_country.getD_neighbourCountries() == null) {
+                            List<String> addToNeighbourList = new ArrayList<String>();
                             l_country.setD_neighbourCountries(addToNeighbourList);
                             l_country.getD_neighbourCountries().add(l_neighbourNameToAdd);
-                            l_result=true;
+                            l_result = true;
                             break;
-                        }
-                        else {
+                        } else {
                             if (!l_country.getD_neighbourCountries().contains(l_neighbourNameToAdd)) {
                                 l_country.getD_neighbourCountries().add(l_neighbourNameToAdd);
                                 l_result = true;
@@ -456,6 +451,7 @@ return commandResponse;
 
     /**
      * This method is used for getting country index by country name
+     *
      * @param p_continentMap
      * @param p_countryName
      * @return CountryIndex
@@ -551,7 +547,7 @@ return commandResponse;
 
                         int l_continentIndex = Integer.parseInt(l_countries[2]);
                         Continent l_currentcontinent = l_continentMap.get(l_continentIndex);
-                        
+
                         l_country = new Country();
                         l_country.setD_countryName(l_countries[1]);
                         l_country.setD_countryIndex(Integer.parseInt(l_countries[0]));
@@ -631,58 +627,43 @@ return commandResponse;
     }
 
     @Override
-    public CommandResponse showmap()
-    {
-        if(d_warMap==null)
-        {
+    public CommandResponse showmap() {
+        if (d_warMap == null) {
             commandResponse.setD_isValid(false);
             commandResponse.setD_responseString("Map is Null");
             return commandResponse;
         }
-        String l_showMapIn2D="";
-        int l_maxLength=0;
-        List<Country> l_countries=new ArrayList<Country>();
-        l_countries=getAvailableCountries(d_warMap);
-        int l_countrySize=l_countries.size();
-        int l_i,l_j;
+        String l_showMapIn2D = "";
+        int l_maxLength = 0;
+        List<Country> l_countries = new ArrayList<Country>();
+        l_countries = getAvailableCountries(d_warMap);
+        int l_countrySize = l_countries.size();
+        int l_i, l_j;
         l_countrySize++;
-        String [][]showmap_matrix=new String[l_countrySize][l_countrySize];
-        for(l_i=0;l_i<l_countrySize;l_i++)
-        {
-            for(l_j=0;l_j<l_countrySize;l_j++)
-            {
-                if(l_i==0 && l_j==0)
-                {
-                    showmap_matrix[l_i][l_j]=" "; continue;
-                }
-                else if (l_i==l_j && l_i!=0)
-                {
-                    showmap_matrix[l_i][l_j]="in";
-                }
-                else if(l_i==0 && l_j!=0)
-                {
-                    showmap_matrix[l_i][l_j]=l_countries.get(l_j-1).getD_countryName();
-                    if(l_maxLength<showmap_matrix[l_i][l_j].length())
-                    {
-                    l_maxLength=showmap_matrix[l_i][l_j].length();
+        String[][] showmap_matrix = new String[l_countrySize][l_countrySize];
+        for (l_i = 0; l_i < l_countrySize; l_i++) {
+            for (l_j = 0; l_j < l_countrySize; l_j++) {
+                if (l_i == 0 && l_j == 0) {
+                    showmap_matrix[l_i][l_j] = " ";
+                    continue;
+                } else if (l_i == l_j && l_i != 0) {
+                    showmap_matrix[l_i][l_j] = "in";
+                } else if (l_i == 0 && l_j != 0) {
+                    showmap_matrix[l_i][l_j] = l_countries.get(l_j - 1).getD_countryName();
+                    if (l_maxLength < showmap_matrix[l_i][l_j].length()) {
+                        l_maxLength = showmap_matrix[l_i][l_j].length();
                     }
-                }
-                else if(l_j==0 && l_i!=0)
-                {
-                    showmap_matrix[l_i][l_j]=l_countries.get(l_i-1).getD_countryName();
-                }
-                else
-                {
-                    if(l_countries.get(l_i-1).getD_neighbourCountries() != null )
-                    {
-                        if (l_countries.get(l_i-1).getD_neighbourCountries().contains(showmap_matrix[0][l_j])) {
+                } else if (l_j == 0 && l_i != 0) {
+                    showmap_matrix[l_i][l_j] = l_countries.get(l_i - 1).getD_countryName();
+                } else {
+                    if (l_countries.get(l_i - 1).getD_neighbourCountries() != null) {
+                        if (l_countries.get(l_i - 1).getD_neighbourCountries().contains(showmap_matrix[0][l_j])) {
                             showmap_matrix[l_i][l_j] = "in";
                         } else {
                             showmap_matrix[l_i][l_j] = "0";
                         }
-                    }
-                    else{
-                        showmap_matrix[l_i][l_j]="0";
+                    } else {
+                        showmap_matrix[l_i][l_j] = "0";
 
                     }
                 }
@@ -690,33 +671,29 @@ return commandResponse;
 
             }
         }
-        for(l_i=0;l_i<l_countrySize;l_i++)
-        {
-            for(l_j=0;l_j<l_countrySize;l_j++)
-            {   String l_stringFrmat=String.format("%1$" + l_maxLength + "s", showmap_matrix[l_i][l_j]);
-                l_showMapIn2D=l_showMapIn2D+l_stringFrmat+"\t";
+        for (l_i = 0; l_i < l_countrySize; l_i++) {
+            for (l_j = 0; l_j < l_countrySize; l_j++) {
+                String l_stringFrmat = String.format("%1$" + l_maxLength + "s", showmap_matrix[l_i][l_j]);
+                l_showMapIn2D = l_showMapIn2D + l_stringFrmat + "\t";
             }
-            l_showMapIn2D=l_showMapIn2D+"\n";
+            l_showMapIn2D = l_showMapIn2D + "\n";
         }
         commandResponse.setD_isValid(true);
         commandResponse.setD_responseString(l_showMapIn2D);
 
 
-
-
-
-    return commandResponse;
+        return commandResponse;
     }
 
     /**
      * used to get all countries available in the map
+     *
      * @param p_continentMap
      * @return arraylist of the country
      */
-    public ArrayList<Country> getAvailableCountries(WarMap p_continentMap)
-    {
+    public ArrayList<Country> getAvailableCountries(WarMap p_continentMap) {
 
-        List<Country> l_countries=new ArrayList<Country>();
+        List<Country> l_countries = new ArrayList<Country>();
         l_countries.clear();
         for (Map.Entry<Integer, Continent> l_entry : p_continentMap.getD_continents().entrySet()) {
             for (Country l_country : l_entry.getValue().getD_countryList()) {
@@ -815,7 +792,7 @@ return commandResponse;
     /**
      * This method will return country index from country name
      *
-     * @param p_warMap is object of WarMap model
+     * @param p_warMap      is object of WarMap model
      * @param p_countryName is the name of country
      * @return index of country
      */
@@ -838,7 +815,7 @@ return commandResponse;
         }
         return l_countryIndex;
     }
-    
+
     /**
      * This method will check edit map command and if file is already exist then
      * read the data of existing map file otherwise it will create new map file
@@ -895,7 +872,7 @@ return commandResponse;
     /**
      * List all files from this given path and extension
      *
-     * @param p_path directory path of files
+     * @param p_path          directory path of files
      * @param p_fileExtension extension of file to be searched
      * @return list of files
      */
