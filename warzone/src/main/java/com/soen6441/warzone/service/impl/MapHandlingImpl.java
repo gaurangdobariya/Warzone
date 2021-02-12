@@ -626,82 +626,6 @@ public class MapHandlingImpl implements MapHandlingInterface {
 
     }
 
-    @Override
-    public CommandResponse showmap() {
-        if (d_warMap == null) {
-            commandResponse.setD_isValid(false);
-            commandResponse.setD_responseString("Map is Null");
-            return commandResponse;
-        }
-        String l_showMapIn2D = "";
-        int l_maxLength = 0;
-        List<Country> l_countries = new ArrayList<Country>();
-        l_countries = getAvailableCountries(d_warMap);
-        int l_countrySize = l_countries.size();
-        int l_i, l_j;
-        l_countrySize++;
-        String[][] showmap_matrix = new String[l_countrySize][l_countrySize];
-        for (l_i = 0; l_i < l_countrySize; l_i++) {
-            for (l_j = 0; l_j < l_countrySize; l_j++) {
-                if (l_i == 0 && l_j == 0) {
-                    showmap_matrix[l_i][l_j] = " ";
-                    continue;
-                } else if (l_i == l_j && l_i != 0) {
-                    showmap_matrix[l_i][l_j] = "in";
-                } else if (l_i == 0 && l_j != 0) {
-                    showmap_matrix[l_i][l_j] = l_countries.get(l_j - 1).getD_countryName();
-                    if (l_maxLength < showmap_matrix[l_i][l_j].length()) {
-                        l_maxLength = showmap_matrix[l_i][l_j].length();
-                    }
-                } else if (l_j == 0 && l_i != 0) {
-                    showmap_matrix[l_i][l_j] = l_countries.get(l_i - 1).getD_countryName();
-                } else {
-                    if (l_countries.get(l_i - 1).getD_neighbourCountries() != null) {
-                        if (l_countries.get(l_i - 1).getD_neighbourCountries().contains(showmap_matrix[0][l_j])) {
-                            showmap_matrix[l_i][l_j] = "in";
-                        } else {
-                            showmap_matrix[l_i][l_j] = "0";
-                        }
-                    } else {
-                        showmap_matrix[l_i][l_j] = "0";
-
-                    }
-                }
-
-
-            }
-        }
-        for (l_i = 0; l_i < l_countrySize; l_i++) {
-            for (l_j = 0; l_j < l_countrySize; l_j++) {
-                String l_stringFrmat = String.format("%1$" + l_maxLength + "s", showmap_matrix[l_i][l_j]);
-                l_showMapIn2D = l_showMapIn2D + l_stringFrmat + "\t";
-            }
-            l_showMapIn2D = l_showMapIn2D + "\n";
-        }
-        commandResponse.setD_isValid(true);
-        commandResponse.setD_responseString(l_showMapIn2D);
-
-
-        return commandResponse;
-    }
-
-    /**
-     * used to get all countries available in the map
-     *
-     * @param p_continentMap
-     * @return arraylist of the country
-     */
-    public ArrayList<Country> getAvailableCountries(WarMap p_continentMap) {
-
-        List<Country> l_countries = new ArrayList<Country>();
-        l_countries.clear();
-        for (Map.Entry<Integer, Continent> l_entry : p_continentMap.getD_continents().entrySet()) {
-            for (Country l_country : l_entry.getValue().getD_countryList()) {
-                l_countries.add(l_country);
-            }
-        }
-        return (ArrayList<Country>) l_countries;
-    }
 
     /**
      * This method will return neighbor name by given Index
@@ -888,3 +812,80 @@ public class MapHandlingImpl implements MapHandlingInterface {
         return l_files;
     }
 }
+
+    @Override
+    public CommandResponse showmap() {
+        if (d_warMap == null) {
+            commandResponse.setD_isValid(false);
+            commandResponse.setD_responseString("Map is Null");
+            return commandResponse;
+        }
+        String l_showMapIn2D = "";
+        int l_maxLength = 0;
+        List<Country> l_countries = new ArrayList<Country>();
+        l_countries = getAvailableCountries(d_warMap);
+        int l_countrySize = l_countries.size();
+        int l_i, l_j;
+        l_countrySize++;
+        String[][] showmap_matrix = new String[l_countrySize][l_countrySize];
+        for (l_i = 0; l_i < l_countrySize; l_i++) {
+            for (l_j = 0; l_j < l_countrySize; l_j++) {
+                if (l_i == 0 && l_j == 0) {
+                    showmap_matrix[l_i][l_j] = " ";
+                    continue;
+                } else if (l_i == l_j && l_i != 0) {
+                    showmap_matrix[l_i][l_j] = "in";
+                } else if (l_i == 0 && l_j != 0) {
+                    showmap_matrix[l_i][l_j] = l_countries.get(l_j - 1).getD_countryName();
+                    if (l_maxLength < showmap_matrix[l_i][l_j].length()) {
+                        l_maxLength = showmap_matrix[l_i][l_j].length();
+                    }
+                } else if (l_j == 0 && l_i != 0) {
+                    showmap_matrix[l_i][l_j] = l_countries.get(l_i - 1).getD_countryName();
+                } else {
+                    if (l_countries.get(l_i - 1).getD_neighbourCountries() != null) {
+                        if (l_countries.get(l_i - 1).getD_neighbourCountries().contains(showmap_matrix[0][l_j])) {
+                            showmap_matrix[l_i][l_j] = "in";
+                        } else {
+                            showmap_matrix[l_i][l_j] = "0";
+                        }
+                    } else {
+                        showmap_matrix[l_i][l_j] = "0";
+
+                    }
+                }
+
+
+            }
+        }
+        for (l_i = 0; l_i < l_countrySize; l_i++) {
+            for (l_j = 0; l_j < l_countrySize; l_j++) {
+                String l_stringFrmat = String.format("%1$" + l_maxLength + "s", showmap_matrix[l_i][l_j]);
+                l_showMapIn2D = l_showMapIn2D + l_stringFrmat + "\t";
+            }
+            l_showMapIn2D = l_showMapIn2D + "\n";
+        }
+        commandResponse.setD_isValid(true);
+        commandResponse.setD_responseString(l_showMapIn2D);
+
+
+        return commandResponse;
+    }
+
+    /**
+     * used to get all countries available in the map
+     *
+     * @param p_continentMap
+     * @return arraylist of the country
+     */
+    public ArrayList<Country> getAvailableCountries(WarMap p_continentMap) {
+
+        List<Country> l_countries = new ArrayList<Country>();
+        l_countries.clear();
+        for (Map.Entry<Integer, Continent> l_entry : p_continentMap.getD_continents().entrySet()) {
+            for (Country l_country : l_entry.getValue().getD_countryList()) {
+                l_countries.add(l_country);
+            }
+        }
+        return (ArrayList<Country>) l_countries;
+    }
