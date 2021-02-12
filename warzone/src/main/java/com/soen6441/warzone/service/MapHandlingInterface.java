@@ -51,4 +51,10 @@ public interface MapHandlingInterface {
      *@return WarMap model
     */
     public WarMap readMap(String p_fileName);
+
+    /**
+     * this method is used to show the map in 2d matrix (country * country)
+     * @return commandresponse to show map
+     */
+    public CommandResponse showmap();
 }
