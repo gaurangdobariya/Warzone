@@ -23,5 +23,5 @@ jobs:
     - name : ls
       run: ls
     - name : test1
-      run: cd warzone && mvn clean javafx:install
+      run: cd warzone && mvn clean javafx:run
    
