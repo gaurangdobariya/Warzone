@@ -14,7 +14,7 @@
 	<name>warzone</name>
 	<description>Warzone game SOEN 6441 Project</description>
 	<properties>
-		<java.version>1.8</java.version>
+<!-- 		<java.version>1.8</java.version> -->
 	</properties>
 	<dependencies>
 		<dependency>
@@ -72,8 +72,8 @@
 			 <plugin>    
        				 <artifactId>maven-compiler-plugin</artifactId>
         				<configuration>
-           					<source>1.8</source>
-            					<target>1.8</target>
+           					<source>11</source>
+            					<target>11</target>
         				</configuration>
     			 </plugin>
 		</plugins>
