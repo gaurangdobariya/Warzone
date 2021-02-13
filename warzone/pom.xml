@@ -14,9 +14,8 @@
 	<name>warzone</name>
 	<description>Warzone game SOEN 6441 Project</description>
 	<properties>
-		<java.version>11.0.4</java.version>
-		 <maven.compiler.source>11.0.4</maven.compiler.source>
-     		 <maven.compiler.target>11.0.4</maven.compiler.target>
+		 <maven.compiler.source>1.8</maven.compiler.source>
+     		 <maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 	<dependencies>
 		<dependency>
