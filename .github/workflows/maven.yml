@@ -19,5 +19,5 @@ jobs:
     - name : Build
       run: cd warzone && mvn clean install 
     - name: Test
-      run: mvn test
+      run: cd warzone && mvn test
    
