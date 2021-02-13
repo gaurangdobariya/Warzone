@@ -19,7 +19,9 @@ jobs:
     - name: Build with Maven1
       run: mvn --version
     - name : test
-      run: java -version
+      run: pwd 
+    - name : ls
+      run: ls
     - name : test1
       run: mvn -f ./warzone/pom.xml clean install
    
