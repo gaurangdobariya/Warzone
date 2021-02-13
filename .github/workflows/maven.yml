@@ -17,5 +17,7 @@ jobs:
       with:
         java-version: 11
     - name : Build
-      run: cd warzone && mvn clean install && mvn test
+      run: cd warzone && mvn clean install 
+    - name: Test
+      run: mvn test
    
