@@ -21,6 +21,6 @@ jobs:
     - name : test
       run: java -version
     - name : test1
-      run: mvn clean
+      run: mvn -f ./warzone/pom.xml clean
     - name: Build with Maven
       run: mvn -B package --file ./warzone/pom.xml
