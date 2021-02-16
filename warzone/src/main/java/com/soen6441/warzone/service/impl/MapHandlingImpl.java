@@ -998,14 +998,14 @@ public class MapHandlingImpl implements MapHandlingInterface {
 
         String l_continentName = "";
 
-        for (Map.Entry<Integer, Continent> entry : p_continentMap.entrySet()) {
+        for (Map.Entry<Integer, Continent> l_continentMap : p_continentMap.entrySet()) {
 
-            Continent continent = entry.getValue();
+            Continent l_continent = l_continentMap.getValue();
 
-            int l_conName = continent.getD_continentIndex();
+            int l_conName = l_continent.getD_continentIndex();
 
             if (l_conName == p_continentIndex) {
-                l_continentName=continent.getD_continentName();
+                l_continentName=l_continent.getD_continentName();
                 break;
             }
 
