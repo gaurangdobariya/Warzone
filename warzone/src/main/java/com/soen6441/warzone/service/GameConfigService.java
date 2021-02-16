@@ -14,8 +14,14 @@ import com.soen6441.warzone.model.Player;
 public interface GameConfigService {
     /**
      *  This function is used to show the map of the countries of a particular player
-     * @param p_player
+     *
      * @return commandresponse to show the map of countries a player has
      */
-    public CommandResponse showPlayerMap(Player p_player);
+    public CommandResponse showPlayerMap();
+
+    /**
+     *   To assign the countries on the first time when map was loaded
+     * @return commanresponse stating the detail of each player with their countries
+     */
+    public CommandResponse assignCountries();
 }
